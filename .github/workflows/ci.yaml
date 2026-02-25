@@ -13,6 +13,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.x"
+          registry-url: https://registry.npmjs.org/
+
       - run: npm ci
       - run: npm run lint
 
@@ -24,6 +26,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.x"
+          registry-url: https://registry.npmjs.org/
+
       - run: npm ci
       - run: npm run test
 
@@ -35,5 +39,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22.x"
+          registry-url: https://registry.npmjs.org/
+
       - run: npm ci
       - run: npm run build
