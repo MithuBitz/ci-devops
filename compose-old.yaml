@@ -1,4 +1,4 @@
-# name: blog-app-ci # version: (obsolete)
+name: blog-app-ci # version: (obsolete)
 
 services:
   blog-db:
