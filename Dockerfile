@@ -22,4 +22,4 @@ EXPOSE 3000
 ENTRYPOINT [ "wait-for-it.sh", "blog-db:3306", "--" ]
 # Start in dev mode with nodemon
 # CMD ["npm", "start"]
-CMD ["node", "index.js"]
+CMD ["node", "dist/index.js"]
