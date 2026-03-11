@@ -21,7 +21,7 @@ services:
     networks:
       - blog-net
   blog-server:
-    image: mibitstech/blog-app:build-2
+    image: mibitstech/blog-app:build-3
     restart: unless-stopped
     depends_on:
       - blog-db
