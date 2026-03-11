@@ -69,8 +69,8 @@ jobs:
 
             # Pull compose file using git
             git fetch origin main
-            git checkout origin/main 
+            # git checkout origin/main 
 
             # Pull the new image
-            docker pull ${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG}}
-            docker stack deploy -c compose.yaml bloggy
+            sudo docker pull ${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG}}
+            sudo docker stack deploy -c compose.yaml bloggy
