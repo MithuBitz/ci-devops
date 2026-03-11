@@ -1,12 +1,14 @@
-# name: blog-app-ci # version: (obsolete)
-
 services:
   blog-db:
-    image: "mysql"
+    image: mysql
     restart: unless-stopped
-
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - '-h'
+        - localhost
       interval: 10s
       timeout: 5s
       retries: 3
@@ -15,30 +17,27 @@ services:
     volumes:
       - blog-db-vol:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - '3306:3306'
     networks:
       - blog-net
-
   blog-server:
-    image: "mibitstech/blog-app:v3"
+    image: mibitstech/blog-app:build-3
     restart: unless-stopped
     depends_on:
       - blog-db
     healthcheck:
       test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:3000/health",
-        ]
+        - CMD
+        - wget
+        - '--no-verbose'
+        - '--tries=1'
+        - '--spider'
+        - http://localhost:3000/health
       interval: 10s
       timeout: 5s
       retries: 3
     ports:
-      - "3001:3000"
+      - '3001:3000'
     environment:
       - DB_HOST=blog-db
       - DB_USER=root
@@ -46,12 +45,9 @@ services:
       - DB_NAME=blogdb
       - MYSQL_ROOT_PASSWORD=root
       - NODE_HOST="{{.Node.Hostname}}"
-
     networks:
       - blog-net
-
 volumes:
-  blog-db-vol:
-
+  blog-db-vol: null
 networks:
-  blog-net:
+  blog-net: null
