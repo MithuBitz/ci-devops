@@ -1,27 +1,31 @@
-FROM node:20
+FROM node:22-slim AS builder
 
-# Set working directory
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y bash
-
-# For run the wait-for-it script
-COPY wait-for-it.sh /usr/local/bin/wait-for-it.sh
-RUN chmod +x /usr/local/bin/wait-for-it.sh
-
-# Install dependencies
 COPY package*.json ./
-RUN npm install
 
-# Copy app files
+RUN npm ci --ignore-scripts
+
 COPY . .
 
 RUN npm run build
 
-# Expose ports
-EXPOSE 3000
+RUN npm prune --omit-dev
 
-ENTRYPOINT [ "wait-for-it.sh", "blog-db:3306", "--" ]
-# Start in dev mode with nodemon
-# CMD ["npm", "start"]
-CMD ["node", "dist/index.js"]
+
+FROM node:22-slim AS runner
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app/dist ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/wait-for-it.sh  /usr/local/bin/wait-for-it.sh
+
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
+EXPOSE 3001
+
+ENTRYPOINT ["wait-for-it.sh", "blog-db:3306", "--"]
+CMD ["node", "index.js"]

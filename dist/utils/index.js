@@ -6,5 +6,5 @@ function getVersion() {
     return "v4";
 }
 function getHostName() {
-    return "unknown";
+    return "super-unknown";
 }
