@@ -8,9 +8,6 @@ services:
         order: start-first
         failure_action: rollback
         delay: 10s
-      rolling_config:
-        parallelism: 1
-        orders: start-first
     healthcheck:
       test:
         - CMD
@@ -37,9 +34,7 @@ services:
         order: start-first
         failure_action: rollback
         delay: 10s
-      rolling_config:
-        parallelism: 1
-        orders: start-first
+
     healthcheck:
       test:
         - CMD
