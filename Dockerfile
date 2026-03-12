@@ -20,6 +20,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/views ./views
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/wait-for-it.sh /usr/local/bin/wait-for-it.sh
 
