@@ -1,4 +1,4 @@
-name: Bloggy CD
+# name: Bloggy CD
 
 on:
   push:
@@ -45,7 +45,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git add .
           git commit -m "Bump the image version ${{ env.IMAGE_TAG}}"
-          git push 
+          git push
 
   deploy:
     name: Deploy the image to docker swarm cluster
