@@ -21,7 +21,7 @@ jobs:
           persist-credentials: true
 
       - name: Build the docker image
-        run: docker build -t ${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG}} --platform linux/amd64 .
+        run: docker build --no-cache -t ${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG}} --platform linux/amd64 .
 
       - name: Login into docker hub
         uses: docker/login-action@v4
