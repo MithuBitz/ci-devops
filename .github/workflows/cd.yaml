@@ -69,7 +69,7 @@ jobs:
 
             # Pull compose file using git
             git fetch origin main
-            # git checkout origin/main 
+            git checkout origin/main 
 
             # Pull the new image
             sudo docker pull ${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG}}
