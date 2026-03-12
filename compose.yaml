@@ -1,4 +1,7 @@
-name: blog-app
+
+# name: blog-app # version: (obsolete)
+
+
 services:
   blog-db:
     image: mysql
@@ -27,7 +30,9 @@ services:
     networks:
       - blog-net
   blog-server:
+
     image: mibitstech/blog-app:build-17
+
     deploy:
       replicas: 1
       update_config:
