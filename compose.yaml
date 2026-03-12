@@ -31,7 +31,9 @@ services:
       - blog-net
   blog-server:
 
-    image: mibitstech/blog-app:build-17
+
+   
+    image: mibitstech/blog-app:build-18
 
     deploy:
       replicas: 1
@@ -39,7 +41,6 @@ services:
         order: start-first
         failure_action: rollback
         delay: 10s
-
     healthcheck:
       test:
         - CMD
