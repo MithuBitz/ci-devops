@@ -26,7 +26,7 @@ services:
     networks:
       - blog-net
   blog-server:
-    image: mibitstech/blog-app:build-db8eec75642ca60e6c09bb290132de7cc061a53a
+    image: mibitstech/blog-app:build-f26cd1cba3e4fab42706c5d4cffec58835e7f481
     deploy:
       replicas: 1
       update_config:
