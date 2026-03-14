@@ -18,17 +18,15 @@ services:
       timeout: 5s
       retries: 3
     environment:
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
+      - MYSQL_ROOT_PASSWORD=root
     volumes:
       - blog-db-vol:/var/lib/mysql
     ports:
       - '3306:3306'
     networks:
       - blog-net
-    secrets:
-      - db_password
   blog-server:
-    image: mibitstech/blog-app:build-48d7024e93e0c43ea42e33f283a40ce7e4b438fd
+    image: mibitstech/blog-app:build-f26cd1cba3e4fab42706c5d4cffec58835e7f481
     deploy:
       replicas: 1
       update_config:
@@ -50,9 +48,10 @@ services:
       - '3001:3000'
     environment:
       - DB_HOST=blog-db
-      - DB_USER_FILE=/run/secrets/db_username
-      - DB_PASSWORD_FILE=/run/secrets/db_password
+      - DB_USER=root
+      - DB_PASSWORD=root
       - DB_NAME=blogdb
+      - MYSQL_ROOT_PASSWORD=root
       - NODE_HOST="{{.Node.Hostname}}"
     networks:
       - blog-net
@@ -60,8 +59,3 @@ volumes:
   blog-db-vol: null
 networks:
   blog-net: null
-secrets:
-  db_password:
-    external: true
-  db_username:
-    external: true

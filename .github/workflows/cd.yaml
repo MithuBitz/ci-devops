@@ -1,4 +1,4 @@
-name: Bloggy CD
+# name: Bloggy CD
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
 
     env:
       IMAGE_NAME: mibitstech/blog-app
-      IMAGE_TAG: build-${{github.run_number}}
+      IMAGE_TAG: build-${{github.sha}}
 
     steps:
       - name: Chechout the source code
@@ -21,7 +21,7 @@ jobs:
           persist-credentials: true
 
       - name: Build the docker image
-        run: docker build -t ${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG}} --platform linux/amd64 .
+        run: docker build --no-cache -t ${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG}} --platform linux/amd64 .
 
       - name: Login into docker hub
         uses: docker/login-action@v4
@@ -45,14 +45,14 @@ jobs:
           git config user.email "github-actions@github.com"
           git add .
           git commit -m "Bump the image version ${{ env.IMAGE_TAG}}"
-          git push origin main
+          git push
 
   deploy:
     name: Deploy the image to docker swarm cluster
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: mibitstech/blog-app
-      IMAGE_TAG: build-${{github.run_number}}
+      IMAGE_TAG: build-${{github.sha}}
     needs:
       - build-and-push
     steps:
@@ -69,7 +69,7 @@ jobs:
 
             # Pull compose file using git
             git fetch origin main
-            # git checkout origin/main 
+            git checkout origin/main 
 
             # Pull the new image
             sudo docker pull ${{ env.IMAGE_NAME}}:${{ env.IMAGE_TAG}}
