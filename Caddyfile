@@ -1,0 +1,7 @@
+{
+    email me@mibitstech.xyz
+}
+
+mibitstech.xyz {
+    reverse_proxy blog-server:3000
+}
