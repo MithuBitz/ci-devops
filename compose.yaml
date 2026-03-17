@@ -28,7 +28,7 @@ services:
     secrets:
       - db_password
   blog-server:
-    image: mibitstech/blog-app:build-c063434c21685ad5b271a81ddf921a5e4a9433bb
+    image: mibitstech/blog-app:build-a358ddc6e4a870dacf6e40eeb4a9956e98da2c00
     deploy:
       replicas: 1
       update_config:
