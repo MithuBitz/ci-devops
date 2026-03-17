@@ -12,7 +12,7 @@ services:
         - CMD
         - mysqladmin
         - ping
-        - '-h'
+        - "-h"
         - localhost
       interval: 10s
       timeout: 5s
@@ -22,7 +22,7 @@ services:
     volumes:
       - blog-db-vol:/var/lib/mysql
     ports:
-      - '3306:3306'
+      - "3306:3306"
     networks:
       - blog-net
     secrets:
@@ -39,15 +39,15 @@ services:
       test:
         - CMD
         - wget
-        - '--no-verbose'
-        - '--tries=1'
-        - '--spider'
+        - "--no-verbose"
+        - "--tries=1"
+        - "--spider"
         - http://localhost:3000/health
       interval: 10s
       timeout: 5s
       retries: 3
     ports:
-      - '3001:3000'
+      - "3001:3000"
     environment:
       - DB_HOST=blog-db
       - DB_USER_FILE=/run/secrets/db_username
@@ -65,15 +65,15 @@ services:
         failure_action: rollback
         delay: 10s
     ports:
-      - '80:80'
-      - '443:443'
+      - "80:80"
+      - "443:443"
     volumes:
       - caddy_data:/data
       - caddy_config:/config
     networks:
       - blog-net
     configs:
-      - source: Caddyfile
+      - source: Caddyfile_v3
         target: /etc/caddy/Caddyfile
 volumes:
   blog-db-vol: null
@@ -87,5 +87,5 @@ secrets:
   db_username:
     external: true
 configs:
-  Caddyfile:
+  Caddyfile_v3:
     file: ./Caddyfile
