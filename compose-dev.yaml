@@ -18,17 +18,15 @@ services:
       timeout: 5s
       retries: 3
     environment:
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
+      - MYSQL_ROOT_PASSWORD=root
     volumes:
       - blog-db-vol:/var/lib/mysql
     ports:
       - '3306:3306'
     networks:
       - blog-net
-    secrets:
-      - db_password
   blog-server:
-    image: mibitstech/blog-app:build-da394a083981d2c9a42bc6551a97dbcb074aa62c
+    image: mibitstech/blog-app:build-f26cd1cba3e4fab42706c5d4cffec58835e7f481
     deploy:
       replicas: 1
       update_config:
@@ -50,45 +48,14 @@ services:
       - '3001:3000'
     environment:
       - DB_HOST=blog-db
-      - DB_USER_FILE=/run/secrets/db_username
-      - DB_PASSWORD_FILE=/run/secrets/db_password
+      - DB_USER=root
+      - DB_PASSWORD=root
       - DB_NAME=blogdb
+      - MYSQL_ROOT_PASSWORD=root
       - NODE_HOST="{{.Node.Hostname}}"
     networks:
       - blog-net
-  caddy:
-    image: caddy:2-alpine
-    deploy:
-      replicas: 1
-      update_config:
-        order: start-first
-        failure_action: rollback
-        delay: 10s
-      rollback_config:
-        parallelism: 1
-        order: start-first
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - caddy_data:/data
-      - caddy_config:/config
-    networks:
-      - blog-net
-    configs:
-      - source: Caddyfile
-        target: /etc/caddy/Caddyfile
 volumes:
   blog-db-vol: null
-  caddy_data: null
-  caddy_config: null
 networks:
   blog-net: null
-secrets:
-  db_password:
-    external: true
-  db_username:
-    external: true
-configs:
-  Caddyfile:
-    file: ./Caddyfile
