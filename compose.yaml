@@ -90,5 +90,5 @@ secrets:
   db_username:
     external: true
 configs:
-  Caddyfile_v3:
+  Caddyfile:
     file: ./Caddyfile
