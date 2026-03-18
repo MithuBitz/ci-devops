@@ -12,7 +12,7 @@ services:
         - CMD
         - mysqladmin
         - ping
-        - "-h"
+        - '-h'
         - localhost
       interval: 10s
       timeout: 5s
@@ -22,13 +22,13 @@ services:
     volumes:
       - blog-db-vol:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - '3306:3306'
     networks:
       - blog-net
     secrets:
       - db_password
   blog-server:
-    image: mibitstech/blog-app:build-f3bc4816675389e479a92623e13b0f36ca843461
+    image: mibitstech/blog-app:build-084fa357646fd3e3b40d3c7894ebc81be5d5555d
     deploy:
       replicas: 1
       update_config:
@@ -39,15 +39,15 @@ services:
       test:
         - CMD
         - wget
-        - "--no-verbose"
-        - "--tries=1"
-        - "--spider"
+        - '--no-verbose'
+        - '--tries=1'
+        - '--spider'
         - http://localhost:3000/health
       interval: 10s
       timeout: 5s
       retries: 3
     ports:
-      - "3001:3000"
+      - '3001:3000'
     environment:
       - DB_HOST=blog-db
       - DB_USER_FILE=/run/secrets/db_username
@@ -68,8 +68,8 @@ services:
         parallelism: 1
         order: start-first
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - caddy_data:/data
       - caddy_config:/config
