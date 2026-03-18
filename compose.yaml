@@ -64,6 +64,9 @@ services:
         order: start-first
         failure_action: rollback
         delay: 10s
+      rollback_config:
+        parallelism: 1
+        order: start-first
     ports:
       - "80:80"
       - "443:443"
@@ -73,7 +76,7 @@ services:
     networks:
       - blog-net
     configs:
-      - source: Caddyfile_v3
+      - source: Caddyfile
         target: /etc/caddy/Caddyfile
 volumes:
   blog-db-vol: null

@@ -2,6 +2,6 @@
     email me@mibitstech.xyz
 }
 
-www.mibitstech.xyz, mibitstech.xyz {
+mibitstech.xyz {
     reverse_proxy blog-server:3000
 }
