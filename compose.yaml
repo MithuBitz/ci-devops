@@ -15,7 +15,7 @@ services:
         - CMD
         - mysqladmin
         - ping
-        - '-h'
+        - "-h"
         - localhost
       interval: 10s
       timeout: 5s
@@ -25,7 +25,7 @@ services:
     volumes:
       - blog-db-vol:/var/lib/mysql
     ports:
-      - '3306:3306'
+      - "3306:3306"
     networks:
       - blog-net
     secrets:
@@ -42,15 +42,15 @@ services:
       test:
         - CMD
         - wget
-        - '--no-verbose'
-        - '--tries=1'
-        - '--spider'
+        - "--no-verbose"
+        - "--tries=1"
+        - "--spider"
         - http://localhost:3000/health
       interval: 10s
       timeout: 5s
       retries: 3
     ports:
-      - '3001:3000'
+      - "3001:3000"
     environment:
       - DB_HOST=blog-db
       - DB_USER_FILE=/run/secrets/db_username
@@ -74,8 +74,8 @@ services:
         parallelism: 1
         order: start-first
     ports:
-      - '80:80'
-      - '443:443'
+      - "80:80"
+      - "443:443"
     volumes:
       - caddy_data:/data
       - caddy_config:/config
@@ -84,6 +84,7 @@ services:
     configs:
       - source: Caddyfile
         target: /etc/caddy/Caddyfile
+ 
   db-backup:
     image: fradelg/mysql-cron-backup:latest
     environment:
@@ -115,6 +116,7 @@ volumes:
   blog-db-vol: null
   caddy_data: null
   caddy_config: null
+  mysql_backup: null
 networks:
   blog-net: null
 secrets:
